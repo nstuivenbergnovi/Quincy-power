@@ -1,6 +1,8 @@
 package com.quincy.database_test.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -11,13 +13,21 @@ public class Customer {
     @GeneratedValue
     private int customerId;
 
+    @NotEmpty
     private String firstName;
+
+    @NotEmpty
     private String lastName;
+
     private String country;
     private String phoneNumber;
+
+    @Email
+    @NotEmpty
     private String email;
+
     @OneToMany(targetEntity = Product.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cp_fk", referencedColumnName = "customerId")
+    @JoinColumn(name = "customerproduct_fk", referencedColumnName = "customerId")
     private List<Product> products;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")

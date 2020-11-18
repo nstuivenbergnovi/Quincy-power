@@ -9,8 +9,6 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @ToString
 @Table(name = "product_tbl")
@@ -20,8 +18,15 @@ public class Product {
     @GeneratedValue
     private int productId;
     private String name;
-    private BigDecimal price;
-    private int quantity;
+    private double price;
+
+
+    public Product(int productId, String name, double price, int quantity) {
+        this.productId = productId;
+        this.name = name;
+        this.price = price;
+
+    }
 
     public int getProductId() {
         return productId;
@@ -39,19 +44,12 @@ public class Product {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }
