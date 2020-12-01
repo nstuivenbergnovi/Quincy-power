@@ -42,7 +42,8 @@ public class Invoice implements Serializable {
     private Date createdAt;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "invoicecustomer_fk", referencedColumnName = "id")
+    @JoinColumn(name = "invoiceIOPcustomer_fk", referencedColumnName = "id")
+    
     private Customer customer;
 
     @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
