@@ -25,7 +25,7 @@ public class ProductService {
         return productRepo.findAll();
     }
 
-    public Product getProductById(int id){
+    public Product getProductById(long id){
         return productRepo.findById(id).orElse(null);
     }
 
@@ -33,7 +33,7 @@ public class ProductService {
         return productRepo.findByName(name);
     }
 
-    public String deleteProductById (int id){
+    public String deleteProductById (long id){
         productRepo.deleteById(id);
         return "item " + id + "is deleted";
     }

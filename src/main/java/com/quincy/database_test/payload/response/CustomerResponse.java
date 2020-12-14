@@ -2,18 +2,18 @@ package com.quincy.database_test.payload.response;
 
 public class CustomerResponse {
 
-    private int customerId;
+    private Long customerId;
     private String firstName;
     private String lastName;
     private String country;
     private String phoneNumber;
     private String email;
 
-    public int getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 

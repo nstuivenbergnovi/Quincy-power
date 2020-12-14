@@ -11,37 +11,61 @@ public class InvoiceLine implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long invoiceId;
-    private Integer quantity;
+    @Column(name = "id")
+    private Long id;
+
+    private int quantity;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="product_id")
     private Product product;
 
-    public Long getInvoiceId() {
-        return invoiceId;
+    @ManyToOne
+    @JoinColumn(name="invoice_id")
+    private Invoice invoice;
+
+
+    public Long getId() {
+        return id;
     }
-    public void setId(Long invoiceId) {
-        this.invoiceId = invoiceId;
+
+    public void setId(Long id) {
+        this.id = id;
     }
-    public Integer getQuantity() {
+
+    public int getQuantity() {
         return quantity;
     }
-    public void setQuantity(Integer quantity) {
+
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public double calculatePrice() {
-        return quantity * product.getPrice();
-    }
     public Product getProduct() {
         return product;
     }
+
     public void setProduct(Product product) {
         this.product = product;
     }
 
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
+    public BigDecimal calculatePrice() {
+
+        BigDecimal price = new BigDecimal(String.valueOf(product.getPrice()));
+        BigDecimal amount = new BigDecimal(quantity);
+
+        return price.multiply(amount);
+
+    }
 
 }

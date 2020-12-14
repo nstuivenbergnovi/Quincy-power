@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name="invoices")
+@Table(name="invoice")
 public class Invoice implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -42,8 +42,6 @@ public class Invoice implements Serializable {
     private Date createdAt;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "invoiceIOPcustomer_fk", referencedColumnName = "id")
-    
     private Customer customer;
 
     @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
@@ -103,12 +101,10 @@ public class Invoice implements Serializable {
         this.lines.add(line);
     }
 
-    public double getTotal() {
-        double total = 0.0;
+    public BigDecimal getTotal() {
+        BigDecimal total = new BigDecimal("0");
         for(InvoiceLine line : lines) {
-            total+= line.calculatePrice();
-            BigDecimal.valueOf(total);
-
+            total.add(line.calculatePrice());
         }
         return total;
     }

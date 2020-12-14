@@ -6,12 +6,12 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
-@Table(name = "customer_tbl")
+@Table(name = "customer")
 public class Customer {
 
     @Id
     @GeneratedValue
-    private int customerId;
+    private Long id;
 
     @NotEmpty
     private String firstName;
@@ -26,22 +26,18 @@ public class Customer {
     @NotEmpty
     private String email;
 
-    @OneToMany(targetEntity = Product.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "customerproduct_fk", referencedColumnName = "customerId")
-    private List<Product> products;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
-    private List<Order> orders;
+    private List<Invoice> invoices;
 
     public Customer() {
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -84,24 +80,16 @@ public class Customer {
         this.email = email;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<Invoice> getInvoices() {
+        return invoices;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
-    public void addOrder(Order order) {
-        orders.add(order);
+    public void addOrder(Invoice invoice) {
+        invoices.add(invoice);
     }
 }
 

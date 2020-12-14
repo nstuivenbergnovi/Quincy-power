@@ -42,7 +42,7 @@ public class CustomerService {
         return customerRepo.findByFirstName(firstName);
     }
 
-    public String deleteCustomerById (int customerId){
+    public String deleteCustomerById (Long customerId){
         customerRepo.deleteById(customerId);
         return "item " + customerId + " is deleted";
     }
@@ -60,7 +60,7 @@ public class CustomerService {
     }
 
     public Customer updateCustomer(Customer customer){
-        Customer existingCustomer = customerRepo.findById(customer.getCustomerId()).orElse(customer);
+        Customer existingCustomer = customerRepo.findById(customer.getId()).orElse(customer);
         existingCustomer.setFirstName(existingCustomer.getFirstName());
         existingCustomer.setLastName(existingCustomer.getLastName());
         existingCustomer.setCountry(existingCustomer.getCountry());
@@ -72,7 +72,7 @@ public class CustomerService {
     public static CustomerResponse customerToResponse(Customer customer) {
         CustomerResponse customerResponse = new CustomerResponse();
 
-        customerResponse.setCustomerId(customer.getCustomerId());
+        customerResponse.setCustomerId(customer.getId());
         customerResponse.setFirstName(customer.getFirstName());
         customerResponse.setLastName(customer.getLastName());
         customerResponse.setCountry(customer.getCountry());

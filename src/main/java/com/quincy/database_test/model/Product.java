@@ -2,11 +2,8 @@ package com.quincy.database_test.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.math.BigDecimal;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,23 +13,30 @@ public class Product {
 
     @Id
     @GeneratedValue
-    private int productId;
+    private Long productId;
     private String name;
     private double price;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="product_id")
+    private List<InvoiceLine> invoiceLines;
 
-    public Product(int productId, String name, double price, int quantity) {
+
+    public Product() {
+    }
+
+    public Product(Long productId, String name, double price, int quantity) {
         this.productId = productId;
         this.name = name;
         this.price = price;
 
     }
 
-    public int getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
@@ -52,4 +56,11 @@ public class Product {
         this.price = price;
     }
 
+    public List<InvoiceLine> getInvoiceLines() {
+        return invoiceLines;
+    }
+
+    public void setInvoiceLines(List<InvoiceLine> invoiceLines) {
+        this.invoiceLines = invoiceLines;
+    }
 }
