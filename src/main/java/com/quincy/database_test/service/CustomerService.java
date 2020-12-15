@@ -36,7 +36,7 @@ public class CustomerService {
         return customerRepo.findAll();
     }
 
-    public Customer getCustomersById(int customerId){
+    public Customer getCustomersById(long customerId){
         return customerRepo.findById(customerId).orElse(null);
     }
 
@@ -84,12 +84,4 @@ public class CustomerService {
     }
 
 
-    public List<Product> findByName(String search) {
-    }
-
-    public Invoice fetchByIdWithClientWithInvoiceLineWithProduct(Long id) {
-    }
-
-    public void saveInvoice(Invoice invoice) {
-    }
 }
