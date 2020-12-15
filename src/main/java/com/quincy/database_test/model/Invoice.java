@@ -1,5 +1,7 @@
 package com.quincy.database_test.model;
 
+import ch.qos.logback.core.net.server.Client;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -112,5 +114,8 @@ public class Invoice implements Serializable {
     @Override
     public String toString() {
         return id + " " + description;
+    }
+
+    public void setClient(Client client) {
     }
 }

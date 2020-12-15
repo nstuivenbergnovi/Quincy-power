@@ -1,6 +1,8 @@
 package com.quincy.database_test.service;
 
 import com.quincy.database_test.model.Customer;
+import com.quincy.database_test.model.Invoice;
+import com.quincy.database_test.model.Product;
 import com.quincy.database_test.payload.request.CustomerRequest;
 import com.quincy.database_test.payload.response.CustomerResponse;
 import com.quincy.database_test.repository.CustomerRepo;
@@ -82,4 +84,12 @@ public class CustomerService {
     }
 
 
+    public List<Product> findByName(String search) {
+    }
+
+    public Invoice fetchByIdWithClientWithInvoiceLineWithProduct(Long id) {
+    }
+
+    public void saveInvoice(Invoice invoice) {
+    }
 }
