@@ -5,6 +5,7 @@ import com.quincy.database_test.model.Invoice;
 import com.quincy.database_test.model.Product;
 import com.quincy.database_test.payload.request.CustomerRequest;
 import com.quincy.database_test.payload.response.CustomerResponse;
+import com.quincy.database_test.payload.response.MessageResponse;
 import com.quincy.database_test.repository.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,9 @@ public class CustomerService {
 
         Customer customer = requestToCustomer(customerRequest);
 
-        return ResponseEntity.ok(customerRepo.save(customer));
+        //return ResponseEntity.ok(customerRepo.save(customer));
         //TODO: Another possible option:
-        //return ResponseEntity.ok(new MessageResponse("Customer added successfully"));
+        return ResponseEntity.ok(new MessageResponse("Customer added successfully"));
     }
 
     public List <Customer> saveCustomers (List <Customer> customers){
