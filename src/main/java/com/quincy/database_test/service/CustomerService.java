@@ -24,9 +24,7 @@ public class CustomerService {
 
         Customer customer = requestToCustomer(customerRequest);
 
-        //return ResponseEntity.ok(customerRepo.save(customer));
-        //TODO: Another possible option:
-        return ResponseEntity.ok(new MessageResponse("Customer added successfully"));
+        return ResponseEntity.ok(customerRepo.save(customer));
     }
 
     public List <Customer> saveCustomers (List <Customer> customers){

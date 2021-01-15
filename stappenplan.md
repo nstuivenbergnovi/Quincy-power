@@ -1,4 +1,10 @@
-1 . voeg customer toe
-2 . voeg invoice toe aan DB (moet gekoppeld worden aan customer)
-3. voeg producten toe
-4. voeg product aan invoice toe.
+product controller schrijven
+product service vergelijkbaar met customer
+voeg producten toe aan de database
+
+producten toevoegen aan een invoiceline
+invoiceline service aanmaken
+invoiceline repo aanmaken
+invoiceline controller met daarin aantal, product id en invoice id
+4. voeg product aan invoiceline toe.
+5. Voeg invoiceline aan invoice toe
