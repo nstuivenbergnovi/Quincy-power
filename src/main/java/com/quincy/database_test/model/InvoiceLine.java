@@ -13,6 +13,7 @@ public class InvoiceLine implements Serializable{
 
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -22,7 +23,7 @@ public class InvoiceLine implements Serializable{
     @JoinColumn(name="product_id")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="invoice_id")
     private Invoice invoice;
 
@@ -67,5 +68,7 @@ public class InvoiceLine implements Serializable{
         return price.multiply(amount);
 
     }
+
+
 
 }

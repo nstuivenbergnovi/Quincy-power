@@ -5,31 +5,31 @@ import javax.validation.constraints.NotBlank;
 public class InvoiceLineRequest {
 
     @NotBlank
-    private Long InvoiceId;
-    private Long ProductId;
-    private Long Quantity;
+    private Long invoiceId;
+    private Long productId;
+    private Long quantity;
 
     public Long getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
     public void setQuantity(Long quantity) {
-        Quantity = quantity;
+        this.quantity = quantity;
     }
 
     public Long getInvoiceId() {
-        return InvoiceId;
+        return invoiceId;
     }
 
     public void setInvoiceId(Long invoiceId) {
-        InvoiceId = invoiceId;
+        this.invoiceId = invoiceId;
     }
 
     public Long getProductId() {
-        return ProductId;
+        return productId;
     }
 
     public void setProductId(Long productId) {
-        ProductId = productId;
+        this.productId = productId;
     }
 }
