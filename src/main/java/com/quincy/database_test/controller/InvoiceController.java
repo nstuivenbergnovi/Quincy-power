@@ -34,7 +34,7 @@ public class InvoiceController {
     }
 
 
-    @PostMapping("/invoice/a/{productId}")
+    @PostMapping("/invoice/a/{productId}/{invoiceLineId}")
     public  ResponseEntity<?> addInvoiceLineToInvoice(@PathVariable Long productId,
                                                       @RequestBody InvoiceLineRequest invoiceLineRequest){
         return invoiceLineService.saveProductsToInvoiceLine(productId, invoiceLineRequest);    }
