@@ -2,15 +2,13 @@ package com.quincy.database_test.controller;
 
 import com.quincy.database_test.payload.request.InvoiceLineRequest;
 import com.quincy.database_test.payload.request.InvoiceRequest;
+import com.quincy.database_test.payload.response.InvoiceResponse;
 import com.quincy.database_test.service.InvoiceLineService;
 import com.quincy.database_test.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class InvoiceController {
@@ -38,7 +36,15 @@ public class InvoiceController {
     public  ResponseEntity<?> addInvoiceLineToInvoice(@PathVariable Long productId,
                                                       @PathVariable Long invoiceId,
                                                       @RequestBody InvoiceLineRequest invoiceLineRequest){
-        return invoiceLineService.saveProductsToInvoiceLine(productId,invoiceId, invoiceLineRequest);    }
+        return invoiceLineService.saveProductsToInvoiceLine(productId,invoiceId, invoiceLineRequest);
+    }
+
+   @GetMapping
+    public  ResponseEntity<?> recieveInvoice (@PathVariable Long productId,
+                                              @PathVariable Long invoiceId,
+                                              @RequestBody InvoiceResponse invoiceResponse){
+        return invoiceLineService.setInvoiceRepo(productId,invoiceId, invoiceResponse);
+    }
 
 
 

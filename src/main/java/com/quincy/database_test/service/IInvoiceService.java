@@ -8,4 +8,5 @@ public interface IInvoiceService {
 
     ResponseEntity<?> saveInvoiceToCustomer(Long customerId, InvoiceRequest invoiceRequest);
     ResponseEntity<?> saveInvoiceToInvoiceLine(Long invoiceId, InvoiceLineRequest invoiceLineRequest);
+
 }
