@@ -3,6 +3,7 @@ package com.quincy.database_test.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -15,7 +16,7 @@ public class Product {
     @GeneratedValue
     private Long productId;
     private String name;
-    private double price;
+    private BigDecimal price;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="product_id")
@@ -25,7 +26,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long productId, String name, double price) {
+    public Product(Long productId, String name, BigDecimal price) {
         this.productId = productId;
         this.name = name;
         this.price = price;
@@ -48,11 +49,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
