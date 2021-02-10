@@ -39,11 +39,9 @@ public class InvoiceController {
         return invoiceLineService.saveProductsToInvoiceLine(productId,invoiceId, invoiceLineRequest);
     }
 
-   @GetMapping
-    public  ResponseEntity<?> recieveInvoice (@PathVariable Long productId,
-                                              @PathVariable Long invoiceId,
-                                              @RequestBody InvoiceResponse invoiceResponse){
-        return invoiceLineService.setInvoiceRepo(productId,invoiceId, invoiceResponse);
+   @GetMapping("/invoice/a/{invoiceId}")
+    public  ResponseEntity<?> recieveInvoice (@PathVariable Long invoiceId){
+        return invoiceService.getInvoiceInformation(invoiceId);
     }
 
 

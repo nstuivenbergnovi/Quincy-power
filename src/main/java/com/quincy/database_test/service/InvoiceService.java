@@ -6,14 +6,18 @@ import com.quincy.database_test.model.InvoiceLine;
 import com.quincy.database_test.model.Product;
 import com.quincy.database_test.payload.request.InvoiceLineRequest;
 import com.quincy.database_test.payload.request.InvoiceRequest;
+import com.quincy.database_test.payload.response.InvoiceLineResponse;
+import com.quincy.database_test.payload.response.InvoiceResponse;
 import com.quincy.database_test.payload.response.MessageResponse;
 import com.quincy.database_test.repository.CustomerRepo;
 import com.quincy.database_test.repository.InvoiceLineRepo;
 import com.quincy.database_test.repository.InvoiceRepo;
+import org.hibernate.validator.constraints.ModCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -72,6 +76,27 @@ public class InvoiceService implements IInvoiceService {
 
         return ResponseEntity.status(500).body(new MessageResponse("Product not found"));
     }
+
+    @Override
+    public ResponseEntity<?> getInvoiceInformation(Long invoiceId) {
+        Optional<Invoice> invoiceFromDb = invoiceRepo.findById(invoiceId);
+
+        if (invoiceFromDb.isPresent()) {
+            Invoice invoice = invoiceFromDb.get();
+            List<InvoiceLine> lines = invoice.getLines();
+            for (InvoiceLine line : lines){
+                InvoiceLineResponse invoiceLineResponse = new InvoiceLineResponse();
+                invoiceLineResponse.setProductName(line.getProduct().getName());
+                invoiceLineResponse.setInvoiceId(line.getId());
+                invoiceLineResponse.setPrice(line.getInvoice().getTotal());
+            }
+               InvoiceResponse invoiceResponse = new InvoiceResponse();
+               invoiceResponse.setInvoiceId(invoice.getId());
+            return ResponseEntity.status(200).body(invoiceResponse);
+        }
+        return null;
+    }
+
 
     private Invoice requestToInvoice(InvoiceRequest invoiceRequest) {
         Invoice invoice = new Invoice();
