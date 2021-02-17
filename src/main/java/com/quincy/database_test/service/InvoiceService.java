@@ -86,11 +86,11 @@ public class InvoiceService implements IInvoiceService {
             for (InvoiceLine invoiceLine : lines){
                 InvoiceLineResponse invoiceLineResponse = new InvoiceLineResponse();
                 invoiceLineResponse.setProductName(invoiceLine.getProduct().getName());
-                invoiceLineResponse.setProductId(invoiceLine.getProduct().getProductId());
                 invoiceLineResponse.setPrice(invoiceLine.getProduct().getPrice());
                 invoiceLineResponse.setQuantity(invoiceLine.getQuantity());
+                return ResponseEntity.status(200).body(invoiceLineResponse);
             }
-            return ResponseEntity.status(200).body(lines);
+            // return ResponseEntity.status(200).body(lines);
         }
         return ResponseEntity.status(500).body(new MessageResponse("Invoice not found"));
     }
