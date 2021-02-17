@@ -70,7 +70,6 @@ public class InvoiceService implements IInvoiceService {
 
             savedInvoiceLine.getInvoice().setLines(null);
 
-            //return ResponseEntity.ok(new MessageResponse("Line has been added to invoice"));
             return ResponseEntity.ok(savedInvoiceLine);
         }
 
@@ -84,16 +83,14 @@ public class InvoiceService implements IInvoiceService {
         if (invoiceFromDb.isPresent()) {
             Invoice invoice = invoiceFromDb.get();
             List<InvoiceLine> lines = invoice.getLines();
-            for (InvoiceLine line : lines){
+            for (InvoiceLine invoiceLine : lines){
                 InvoiceLineResponse invoiceLineResponse = new InvoiceLineResponse();
-                invoiceLineResponse.setProductName(line.getProduct().getName());
-                invoiceLineResponse.setInvoiceId(line.getId());
-                invoiceLineResponse.setPrice(line.getProduct().getPrice());
-                return ResponseEntity.status(200).body(invoiceLineResponse);
+                invoiceLineResponse.setProductName(invoiceLine.getProduct().getName());
+                invoiceLineResponse.setProductId(invoiceLine.getProduct().getProductId());
+                invoiceLineResponse.setPrice(invoiceLine.getProduct().getPrice());
+                invoiceLineResponse.setQuantity(invoiceLine.getQuantity());
             }
-//               InvoiceResponse invoiceResponse = new InvoiceResponse();
-//               invoiceResponse.setInvoiceId(invoice.getId());
-//            return ResponseEntity.status(200).body(invoiceResponse);
+            return ResponseEntity.status(200).body(lines);
         }
         return ResponseEntity.status(500).body(new MessageResponse("Invoice not found"));
     }
@@ -113,11 +110,6 @@ public class InvoiceService implements IInvoiceService {
     private InvoiceLine requestToInvoiceLine(InvoiceLineRequest invoiceLineRequest) {
         InvoiceLine invoiceLine = new InvoiceLine();
         invoiceLine.setQuantity(invoiceLineRequest.getQuantity());
-//        if(invoiceLineRequest.getQuantity()!= null){
-//            invoiceLine.setQuantity(invoiceLineRequest.getQuantity());
-//        }
-
-
         return invoiceLine;
 
     }
