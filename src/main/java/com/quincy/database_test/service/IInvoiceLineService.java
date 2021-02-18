@@ -6,4 +6,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface IInvoiceLineService {
     ResponseEntity<?> saveProductsToInvoiceLine(Long productId, Long invoiceId, InvoiceLineRequest invoiceLineRequest);
+
 }

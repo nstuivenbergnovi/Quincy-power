@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,8 @@ public class InvoiceService implements IInvoiceService {
     private InvoiceRepo invoiceRepo;
     private CustomerRepo customerRepo;
     private InvoiceLineRepo invoiceLineRepo;
+
+    int telling = -1;
 
     @Autowired
     public void setInvoiceRepo(InvoiceRepo invoiceRepo) {
@@ -78,21 +81,27 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public ResponseEntity<?> getInvoiceInformation(Long invoiceId) {
+
         Optional<Invoice> invoiceFromDb = invoiceRepo.findById(invoiceId);
+
+        List<InvoiceLineResponse> nieuweLijst = new ArrayList<>();
 
         if (invoiceFromDb.isPresent()) {
             Invoice invoice = invoiceFromDb.get();
-            List<InvoiceLine> lines = invoice.getLines();
+            List<InvoiceLine> lines = (invoice.getLines());
+            InvoiceLineResponse invoiceLineResponse;
+
             for (InvoiceLine invoiceLine : lines){
-                InvoiceLineResponse invoiceLineResponse = new InvoiceLineResponse();
+                invoiceLineResponse = new InvoiceLineResponse();
                 invoiceLineResponse.setProductName(invoiceLine.getProduct().getName());
                 invoiceLineResponse.setPrice(invoiceLine.getProduct().getPrice());
                 invoiceLineResponse.setQuantity(invoiceLine.getQuantity());
-                return ResponseEntity.status(200).body(invoiceLineResponse);
+                nieuweLijst.add(invoiceLineResponse);
             }
-            // return ResponseEntity.status(200).body(lines);
+            return ResponseEntity.status(200).body(nieuweLijst);
+        } else {
+            return ResponseEntity.status(500).body(new MessageResponse("Invoice not found"));
         }
-        return ResponseEntity.status(500).body(new MessageResponse("Invoice not found"));
     }
 
 
