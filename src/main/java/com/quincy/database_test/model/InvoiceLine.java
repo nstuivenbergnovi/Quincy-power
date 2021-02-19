@@ -60,14 +60,7 @@ public class InvoiceLine implements Serializable{
         this.invoice = invoice;
     }
 
-    public BigDecimal calculatePrice() {
 
-        BigDecimal price = new BigDecimal(String.valueOf(product.getPrice()));
-        BigDecimal amount = new BigDecimal(quantity);
-
-        return price.multiply(amount);
-
-    }
 
 
 

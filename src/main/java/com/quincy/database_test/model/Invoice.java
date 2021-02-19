@@ -103,14 +103,6 @@ public class Invoice implements Serializable {
         this.lines.add(line);
     }
 
-    public BigDecimal getTotal() {
-        BigDecimal total = new BigDecimal("0");
-        for(InvoiceLine line : lines) {
-            total.add(line.calculatePrice());
-        }
-        return total;
-    }
-
     @Override
     public String toString() {
         return id + " " + description;

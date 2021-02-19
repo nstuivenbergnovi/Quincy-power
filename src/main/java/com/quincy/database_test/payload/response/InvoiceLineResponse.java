@@ -1,11 +1,14 @@
 package com.quincy.database_test.payload.response;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class InvoiceLineResponse {
     private String productName;
     private BigDecimal price;
     private Long quantity;
+    private BigDecimal totalPrice;
+
 
     public Long getQuantity() {
         return quantity;
@@ -29,5 +32,13 @@ public class InvoiceLineResponse {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totPrice) {
+        this.totalPrice = totPrice;
     }
 }

@@ -6,6 +6,7 @@ import com.quincy.database_test.model.InvoiceLine;
 import com.quincy.database_test.model.Product;
 import com.quincy.database_test.payload.request.InvoiceLineRequest;
 import com.quincy.database_test.payload.request.InvoiceRequest;
+import com.quincy.database_test.payload.response.CustomerResponse;
 import com.quincy.database_test.payload.response.InvoiceLineResponse;
 import com.quincy.database_test.payload.response.InvoiceResponse;
 import com.quincy.database_test.payload.response.MessageResponse;
@@ -17,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +30,6 @@ public class InvoiceService implements IInvoiceService {
     private InvoiceRepo invoiceRepo;
     private CustomerRepo customerRepo;
     private InvoiceLineRepo invoiceLineRepo;
-
-    int telling = -1;
 
     @Autowired
     public void setInvoiceRepo(InvoiceRepo invoiceRepo) {
@@ -81,28 +82,52 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public ResponseEntity<?> getInvoiceInformation(Long invoiceId) {
-
+        //Chekken of er iets in de database staat
         Optional<Invoice> invoiceFromDb = invoiceRepo.findById(invoiceId);
+        //Nieuwe factuur klaarzetten om te vullen
+        InvoiceResponse invoiceresponse = new InvoiceResponse();
 
+        //Stap 1: invoiceline vullen
         List<InvoiceLineResponse> nieuweLijst = new ArrayList<>();
 
         if (invoiceFromDb.isPresent()) {
             Invoice invoice = invoiceFromDb.get();
             List<InvoiceLine> lines = (invoice.getLines());
             InvoiceLineResponse invoiceLineResponse;
-
             for (InvoiceLine invoiceLine : lines){
                 invoiceLineResponse = new InvoiceLineResponse();
                 invoiceLineResponse.setProductName(invoiceLine.getProduct().getName());
                 invoiceLineResponse.setPrice(invoiceLine.getProduct().getPrice());
                 invoiceLineResponse.setQuantity(invoiceLine.getQuantity());
+                BigDecimal quantity = new BigDecimal(invoiceLine.getQuantity());
+                invoiceLineResponse.setTotalPrice(invoiceLine.getProduct().getPrice().multiply(quantity));
                 nieuweLijst.add(invoiceLineResponse);
             }
-            return ResponseEntity.status(200).body(nieuweLijst);
+            invoiceresponse.setInvoiceLine(nieuweLijst);
+
+            invoiceresponse.setLastName(invoice.getCustomer().getLastName());
+            invoiceresponse.setFirstName(invoice.getCustomer().getFirstName());
+
+            invoiceresponse.setCreatedAt(invoice.getCreatedAt());
+
+                BigDecimal total = new BigDecimal("0");
+                for(InvoiceLineResponse line : nieuweLijst) {
+                    BigDecimal amount = new BigDecimal(line.getQuantity());
+                    BigDecimal total2 = line.getPrice().multiply(amount);
+                    total = total.add(total2);
+                }
+                invoiceresponse.setTotal(total);
+
+            return ResponseEntity.status(200).body(invoiceresponse);
+
         } else {
             return ResponseEntity.status(500).body(new MessageResponse("Invoice not found"));
         }
+
+        //Stap 2: totaalprijs berekenen
+
     }
+
 
 
     private Invoice requestToInvoice(InvoiceRequest invoiceRequest) {
