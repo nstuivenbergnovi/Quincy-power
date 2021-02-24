@@ -3,6 +3,7 @@ package com.quincy.database_test.controller;
 import com.quincy.database_test.model.Product;
 import com.quincy.database_test.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,11 +30,15 @@ public class ProductController {
     public Product findProductByName(@PathVariable("name")String name){
         return service.getProductByName(name);
     }
+
     @PutMapping("/products/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public Product updateProduct(@RequestBody Product product){
         return service.updateProduct(product);
     }
+
     @DeleteMapping("/products/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteProduct(@PathVariable int id){
         return service.deleteProductById(id);
     }

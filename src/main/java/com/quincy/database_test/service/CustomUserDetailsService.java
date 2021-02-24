@@ -1,0 +1,52 @@
+package com.quincy.database_test.service;
+
+import com.quincy.database_test.model.Authority;
+import com.quincy.database_test.model.Customer;
+import com.quincy.database_test.model.User;
+import com.quincy.database_test.service.UserService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        Optional<User> user = userService.getUser(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+
+        String password = user.orElse(null).getPassword();
+        String encoded = passwordEncoder.encode(password);
+        user.orElse(null).setPassword(encoded);
+
+        Set<Authority> authorities = user.orElse(null).getAuthorities();
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Authority authority: authorities) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
+        }
+
+        return new org.springframework.security.core.userdetails.User(username, password, grantedAuthorities);
+    }
+
+
+}
