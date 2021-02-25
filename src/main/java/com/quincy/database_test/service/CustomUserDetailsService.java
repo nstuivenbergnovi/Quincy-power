@@ -1,9 +1,8 @@
 package com.quincy.database_test.service;
 
 import com.quincy.database_test.model.Authority;
-import com.quincy.database_test.model.Customer;
 import com.quincy.database_test.model.User;
-import com.quincy.database_test.service.UserService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

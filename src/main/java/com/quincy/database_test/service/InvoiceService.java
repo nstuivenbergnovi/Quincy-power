@@ -82,12 +82,10 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public ResponseEntity<?> getInvoiceInformation(Long invoiceId) {
-        //Chekken of er iets in de database staat
         Optional<Invoice> invoiceFromDb = invoiceRepo.findById(invoiceId);
-        //Nieuwe factuur klaarzetten om te vullen
+
         InvoiceResponse invoiceresponse = new InvoiceResponse();
 
-        //Stap 1: invoiceline vullen
         List<InvoiceLineResponse> nieuweLijst = new ArrayList<>();
 
         if (invoiceFromDb.isPresent()) {
@@ -123,9 +121,6 @@ public class InvoiceService implements IInvoiceService {
         } else {
             return ResponseEntity.status(500).body(new MessageResponse("Invoice not found"));
         }
-
-        //Stap 2: totaalprijs berekenen
-
     }
 
 

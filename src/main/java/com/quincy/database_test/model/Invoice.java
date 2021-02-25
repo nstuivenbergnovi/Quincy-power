@@ -27,8 +27,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="invoice")
-public class Invoice implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Invoice implements Serializable{
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

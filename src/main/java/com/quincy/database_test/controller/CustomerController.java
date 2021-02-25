@@ -11,20 +11,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasRole('ADMIN')")
 public class CustomerController {
 
     @Autowired
     private CustomerService service;
 
     @PostMapping("/customers")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> addCustomer(@RequestBody CustomerRequest customer){
         return service.saveCustomer(customer);
     }
+
     @GetMapping("/customers")
     public List<Customer> findAllCustomers(){
         return  service.getCustomers();
     }
-
     @GetMapping("/customers/a/{customerId}")
     @PreAuthorize("hasRole('ADMIN')")
     public Customer findCustomerById(@PathVariable("customerId") int customerId){

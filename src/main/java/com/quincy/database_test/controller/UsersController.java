@@ -31,11 +31,13 @@ public class UsersController {
     }
 
     @GetMapping(value = "/{username}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> getUser(@PathVariable("username") String username) {
         return ResponseEntity.ok().body(userService.getUser(username));
     }
 
     @PostMapping(value = "")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Object> createUser(@RequestBody User user) {
         String newUsername = userService.createUser(user);
 
@@ -60,11 +62,13 @@ public class UsersController {
     }
 
     @GetMapping(value = "/{username}/authorities")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> getUserAuthorities(@PathVariable("username") String username) {
         return ResponseEntity.ok().body(userService.getAuthorities(username));
     }
 
     @PostMapping(value = "/{username}/authorities")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> addUserAuthority(@PathVariable("username") String username, @RequestBody Map<String, Object> fields) {
         try {
             String authorityName = (String) fields.get("authority");
@@ -77,6 +81,7 @@ public class UsersController {
     }
 
     @DeleteMapping(value = "/{username}/authorities/{authority}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> deleteUserAuthority(@PathVariable("username") String username, @PathVariable("authority") String authority) {
         userService.removeAuthority(username, authority);
         return ResponseEntity.noContent().build();

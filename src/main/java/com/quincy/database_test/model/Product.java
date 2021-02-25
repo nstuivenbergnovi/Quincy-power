@@ -13,8 +13,9 @@ import java.util.List;
 public class Product {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
+
     private String name;
     private BigDecimal price;
 

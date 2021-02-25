@@ -10,7 +10,7 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty
@@ -88,8 +88,7 @@ public class Customer {
         this.invoices = invoices;
     }
 
-    public void addOrder(Invoice invoice) {
-        invoices.add(invoice);
+    public void addOrder(Invoice invoice) { invoices.add(invoice);
     }
 
 

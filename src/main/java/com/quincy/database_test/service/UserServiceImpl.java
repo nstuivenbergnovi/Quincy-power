@@ -6,6 +6,7 @@ import com.quincy.database_test.model.Authority;
 import com.quincy.database_test.model.User;
 import com.quincy.database_test.repository.UserRepository;
 import com.quincy.database_test.utils.RandomStringGenerator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

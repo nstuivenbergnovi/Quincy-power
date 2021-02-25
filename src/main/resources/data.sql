@@ -13,18 +13,16 @@ values
 ('admin', 'ROLE_ADMIN')
 ON DUPLICATE KEY UPDATE username=username;
 
-insert into customer (id, country, email, first_name, last_name, phone_number)
+insert into customer (country, email, first_name, last_name, phone_number)
 values
-(1, 'Leverworst', 'Anoniempje@hotmail.com', 'Pieter', 'Post', '123456789')
+('Leverworst', 'Anoniempje@hotmail.com', 'Pieter', 'Post', '123456789')
 
 ON DUPLICATE KEY UPDATE id=id;
 
-insert into product (id, name, price)
+insert into product (name, price)
 values
-(2, 'Bruine bollen', 0.99),
-(3, 'Roze koeken', 1.99)
-
-ON DUPLICATE KEY UPDATE id=id;
+( 'Bruine bollen', 0.99),
+( 'Roze koeken', 1.99)
 
 
 
