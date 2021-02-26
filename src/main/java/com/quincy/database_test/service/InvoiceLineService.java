@@ -55,16 +55,11 @@ public class InvoiceLineService implements IInvoiceLineService{
 
             InvoiceLine savedInvoiceLine = invoiceLineRepo.save(invoiceLine);
 
-            //savedInvoiceLine.getProduct().setInvoiceLines(null);
-            //savedInvoiceLine.getInvoice().setLines(null);
-            //savedInvoiceLine.getInvoice().getCustomer().setInvoices(new ArrayList<>());
-
             StringBuilder sb = new StringBuilder(product.getName())
                     .append(" is toegevoegd aan factuur: ")
                     .append(invoice.getId());
 
             return ResponseEntity.ok(new MessageResponse(sb.toString()));
-            //return ResponseEntity.ok(savedInvoiceLine);
         }
 
         return ResponseEntity.status(500).body(new MessageResponse("Product not found"));
@@ -74,12 +69,6 @@ public class InvoiceLineService implements IInvoiceLineService{
     private InvoiceLine requestToInvoiceLine(InvoiceLineRequest invoiceLineRequest) {
         InvoiceLine invoiceLine = new InvoiceLine();
         invoiceLine.setQuantity(invoiceLineRequest.getQuantity());
-//        if(invoiceLineRequest.getQuantity()!= null){
-//            invoiceLine.setQuantity(invoiceLineRequest.getQuantity());
-//        }
-
-
         return invoiceLine;
-
     }
 }
